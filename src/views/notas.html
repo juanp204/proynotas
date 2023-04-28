@@ -15,7 +15,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid" style="width: 80%;">
-      <a class="navbar-brand" href="/">SIGAA</a>
+      <a class="navbar-brand" href="/">PontiApp</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -72,7 +72,11 @@
                 </div>
 
                 <a href="/">
-                    <button class="btn btn-outline-success" type="button" onclick="" id="btnSave">volver</button>
+                    <button class="btn btn-outline-success" type="button" onclick="" id="">volver</button>
+                </a>
+
+                <a href="/eliminarmateria">
+                    <button class="btn btn-outline-success" type="button" onclick="" id="">Eliminar</button>
                 </a>
 
             </div>
@@ -183,14 +187,17 @@
         }
         else if(sumpor<100){
             let valts = (300-valt)/(100-sumpor);
-            if(valts<3){
-                alerta("Necesitas",`Necesitas ${valts} para pasar la materia, No te relajes`,"success",true,false)
+            if((((valt/100)>3) & (valts<3)) | valts == 0){
+                alerta("No Necesitas Nota",`No Necesitas Nota para pasar, llevas la materia en ${valt/100}, No te relajes y sigue así.`,"success",true,false)
+                console.log("primero")
             }
             else if(valts<=5){
-                alerta("Necesitas",`Necesitas ${valts} para pasar la materia, con esfuerzo puedes pasar`,"warning",true,false)
+                alerta("Necesitas",`Necesitas ${valts} para pasar la materia, con esfuerzo puedes pasar.`,"warning",true,false)
+                console.log("mitad")
             }
             else if(valts>5){
-                alerta("Necesitas",`Necesitas ${valts} para pasar la materia, suerte para la proxima`,"error",true,false)
+                alerta("Necesitas",`Necesitas ${valts} para pasar la materia, suerte para la proxima.`,"error",true,false)
+                console.log("final")
             }
             
         }

@@ -205,6 +205,21 @@ router.post('/agregarmateria', (req, res)=>{
     })
 })
 
+router.get('/eliminarmateria', (req, res)=>{
+    const nom = req.session.nommateria;
+    const id = req.session.idu;
+
+    conectado.query(`DELETE FROM notas where ID_Usuarios = ${id} and ID_Materias = (select ID FROM materias where Nombre_Materia = "${nom}") `, async(error,result)=>{
+        if(error){
+            console.log("no elimino")
+            console.log(error)
+        }
+    })
+
+    res.redirect('/')
+    
+})
+
 router.post('/agregarnota', (req, res)=>{
     const id = req.session.idu;
     const notast = req.body.notas;
