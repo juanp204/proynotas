@@ -38,12 +38,12 @@ router.get('/init', async (req, res) => {
 //cambiar numero por porcentaje
 router.get('/notas/:nom', (req, res) => {
     const idmat = req.params["nom"]
+    req.session.nommateria = idmat
     const user = req.session.user
     const id = req.session.idu
-    const con = `${JSON.stringify(results)}`;
-    conectado.query(`SELECT * FROM notas inner join  WHERE ID_Usuarios = '' and notas.Numero > 0`, async (error, results)=>{
-
-        res.send({'results': results});
+    conectado.query(`SELECT * FROM notas inner join materias on notas.ID_materias = Materias.ID WHERE ID_Usuarios = '${id}' and notas.Numero > 0 and Nombre_materia = '${idmat}'`, async (error, results)=>{
+        const con = `${JSON.stringify(results)}`; 
+        res.render(path.join(route,'views/notas.html'),{us:user, nom:idmat, res:con})
 
     })
 });
@@ -52,22 +52,6 @@ router.get('/registrarse', async (req, res) => {
     res.render(path.join(route,'views/registrarse.html'));
 });
 
-
-router.get('/perfil/:nom', async (req, res) => {
-    conectado.query("SELECT us_nickname,us_nombres,us_apellidos,us_fecha_nacimiento,us_correo,us_id_uni,us_universidad,us_facultad,us_semestre FROM usuario WHERE us_nickname = ?",[req.params["nom"]], async (error, results)=>{
-        const user = req.session.user
-        const nom = req.params["nom"]
-        const id = req.session.tipeuser
-        //const
-        if(results.length==0){
-            res.redirect('/')
-        }
-        else{
-            const con = `${JSON.stringify(results)}`;
-            res.render(path.join(route,'views/perfil.html'), {res: con, us: user, id: id, nom:nom});
-        }
-    })
-});
 
 
 //------- css
@@ -219,6 +203,42 @@ router.post('/agregarmateria', (req, res)=>{
         res.redirect('/')
         
     })
+})
+
+router.post('/agregarnota', (req, res)=>{
+    const id = req.session.idu;
+    const notast = req.body.notas;
+    const port = req.body.porcentaje;
+    const nom = req.session.nommateria;
+    console.log(typeof notast == "string");
+    console.log(notast.length);
+    console.log(nom)
+
+    conectado.query(`DELETE FROM notas where numero <> 0 and ID_Usuarios = ${id} and ID_Materias = (select ID FROM materias where Nombre_Materia = "${nom}") `, async(error,result)=>{
+        if(error){
+            console.log("no elimino")
+            console.log(error)
+        }
+    })
+
+    for (let i = 0; i < notast.length; i++) {
+        if (typeof notast != "string"){
+            conectado.query(`INSERT INTO notas (ID_Materias, ID_Usuarios, Numero, Nota) SELECT (SELECT ID FROM materias where Nombre_materia = "${nom}") as id, "${id}", ${port[i]}, ${notast[i]}`, async(error,result)=>{
+                if(error){
+                    console.log("nota agregada")
+                }
+            })
+        }
+        else{
+            conectado.query(`INSERT INTO notas (ID_Materias, ID_Usuarios, Numero, Nota) SELECT (SELECT ID FROM materias where Nombre_materia = "${nom}") as id, "${id}", ${port}, ${notast}`, async(error,result)=>{
+                if(error){
+                    console.log("nota agregada")
+                }
+            })
+        }
+            
+    }
+    res.redirect('/')
 })
 
 

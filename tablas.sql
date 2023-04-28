@@ -22,7 +22,7 @@
         id_materias int not null,
         id_usuarios int not null,
         ID int not null auto_increment,
-        porcentaje int not null,
+        numero int not null,
         nota float,
         PRIMARY KEY (ID, id_materias, id_usuarios),
         FOREIGN KEY (id_materias) REFERENCES materias(ID),
