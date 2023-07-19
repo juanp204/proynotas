@@ -1,0 +1,57 @@
+/*{
+    border: 1px solid #333333;
+}*/
+.iniciar{
+    border: 1px solid #333333;
+    margin-top: 5%;
+    height: 65%;
+    width: 35%;
+}
+.btn_inic{
+    margin-top: 20px;
+}
+
+.ideas{
+    display: block;
+    margin-left: 23%;
+}
+.pag{
+    margin-left: 30%;
+}
+
+.form_mid{
+    margin-left: 30%;
+}
+.idea{
+    margin-left: 10%;
+}
+.caja_ideas{
+    border: 1px solid #333333;
+}
+
+.css{
+    position: absolute;
+    margin: 0;
+    border: 69px;
+    border: 1px solid tomato;
+    width: 500px;
+    height: 500px;
+    right: 1px;
+    top: ;
+    bottom: ;
+    color: ;
+    background-color: ;
+
+
+}
+.materias{
+    max-width: 20rem; 
+    min-width: 15rem; 
+    max-height: 10rem; 
+    margin: 1%;
+}
+
+
+.notas{
+    margin: 40px;
+}
